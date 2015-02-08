@@ -9,10 +9,9 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
 import org.ghumasta.models.Task;
+import org.ghumasta.utilities.TaskCollection;
 
-import java.sql.Timestamp;
 
 @Path("/Task")
 public class TaskService {
@@ -21,6 +20,9 @@ public class TaskService {
     @Produces("application/json")
     public Task defaultTask(){
         Task task = new Task("Default Task Created");
+        TaskCollection taskCollection= new TaskCollection();
+        taskCollection.createMongoObjectToList(task);
+        taskCollection.insertList();
         return task;
     }
 }
