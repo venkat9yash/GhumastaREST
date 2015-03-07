@@ -2,14 +2,20 @@ package org.ghumasta.models;
 
 import java.sql.Timestamp;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
  * Created by YashGunapati1 on 2/1/15.
  */
 public class Task {
-    Date timeOfCreation;
-    String taskDescription;
+    private Date timeOfCreation;
+    private String taskDescription;
+    private int goalUnitId;
+    private float taskHours;
+    private float donePercentage;
+    private ArrayList<String> keyWords;
+
 
     public Task(String TaskData){
         timeOfCreation = new Date(new Timestamp(new java.util.Date().getTime()).getTime());

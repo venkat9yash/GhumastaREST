@@ -5,9 +5,8 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.google.common.collect.Multiset;
 import com.google.common.collect.HashMultiset;
-import com.sun.org.apache.xpath.internal.operations.Mult;
 import org.ghumasta.models.Task;
-import org.ghumasta.mongo.Mongo;
+import org.ghumasta.database.Mongo;
 
 
 import java.util.ArrayList;
@@ -25,8 +24,8 @@ public class TaskCollection extends Mongo{
     public TaskCollection()
     {
         super();
-        connectToDatabase("test");
-        loadCollection("test");
+        connectToDatabase(properties.getProperty("mongo_task_db"));
+        queryDatabase(properties.getProperty("mongo_task_collection"));
     }
 
     public Multiset<Task> searchByDateRange(Date startDate, Date endDate){
@@ -47,7 +46,7 @@ public class TaskCollection extends Mongo{
 
         }
         return taskList;
-
+//Method to convert into Output Table to be written during presentation Layer
 
     }
 
@@ -61,7 +60,7 @@ public class TaskCollection extends Mongo{
     public boolean insertList(){
 
         if(objectArrayList != null) {
-            insertDocuments(objectArrayList);
+            insertData(objectArrayList);
             return true;
         }
         else{

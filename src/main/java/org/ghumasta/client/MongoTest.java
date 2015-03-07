@@ -1,6 +1,7 @@
 package org.ghumasta.client;
 
 import org.ghumasta.utilities.TaskCollection;
+import org.ghumasta.database.Mongo;
 import org.ghumasta.models.Task;
 
 import java.text.SimpleDateFormat;
@@ -17,6 +18,7 @@ public class MongoTest {
             Task sampleTask = new Task("Final Test");
             TaskDB.createMongoObjectToList(sampleTask);
             TaskDB.insertList();
+
             Date firstDate = new SimpleDateFormat("yyyy-MM-dd").parse("2015-02-01");
             Date endDate =  new SimpleDateFormat("yyyy-MM-dd").parse("2015-02-09");
             for (Task returnTask : TaskDB.searchByDateRange(firstDate, endDate).elementSet()){

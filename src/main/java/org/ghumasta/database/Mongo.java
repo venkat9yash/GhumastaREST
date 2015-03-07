@@ -1,4 +1,4 @@
-package org.ghumasta.mongo;
+package org.ghumasta.database;
 
 import com.mongodb.*;
 
@@ -8,7 +8,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Properties;
 
-public abstract  class Mongo {
+public class Mongo implements Database<BasicDBObject>{
     private String host_name;
     private int port_number;
     protected Properties properties;
@@ -20,7 +20,7 @@ public abstract  class Mongo {
     public Mongo(){
 
         try{
-            properties_stream = new FileInputStream("/Users/YashGunapati1/IdeaProjects/GhumastaREST/src/main/java/org/ghumasta/mongo/mongo.properties");
+            properties_stream = new FileInputStream("/Users/YashGunapati1/IdeaProjects/GhumastaREST/src/main/java/org/ghumasta/database/database.properties");
             properties = new Properties();
             properties.load(properties_stream);
             mongo_connection = new MongoClient(properties.getProperty("mongo_host"),Integer.valueOf(properties.getProperty("mongo_port")));
@@ -30,15 +30,18 @@ public abstract  class Mongo {
             e.printStackTrace();
         }
     }
+    @Override
     public boolean connectToDatabase(String databaseName){
         mongo_db = mongo_connection.getDB(databaseName);
         return (mongo_db !=null) ? true : false ;
     }
-    public boolean loadCollection(String collectionName){
-        mongo_table = mongo_db.getCollection(collectionName);
+    @Override
+    public boolean queryDatabase(String queryName){
+        mongo_table = mongo_db.getCollection(queryName);
         return (mongo_table != null) ? true : false;
     }
-    public void insertDocuments(ArrayList<BasicDBObject> dbObjects)
+    @Override
+    public void insertData(ArrayList<BasicDBObject> dbObjects)
     {
         for (BasicDBObject dbObject : dbObjects){
             mongo_table.insert(dbObject);
